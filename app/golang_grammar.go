@@ -54,16 +54,24 @@ var (
 	importDeclaration       = Sequence(Import, optionalWhitespaceBlock, Set(importBoundedAll, importSingle))
 
 	//Function Signature
-	Func                        = SequenceOfCharacters("func")
-	parameter                   = Label(Sequence(variableName, whitespaceNoNewLineBlock, typeName), "parameter")
-	functionParameters          = FunctionParameterCodeBlock(openBracket, parameter, comma, closedBracket)
+	Func                          = SequenceOfCharacters("func")
+	parameter                     = Label(Sequence(variableName, whitespaceNoNewLineBlock, typeName), "parameter")
+	functionParametersList        = Sequence(Range(Sequence(parameter, optionalWhitespaceNoNewLineBlock, comma, optionalWhitespaceBlock), 1, -1), optionalWhitespaceBlock, parameter)
+	functionParametersBoundedList = Sequence(openBracket, optionalWhitespaceBlock, functionParametersList, optionalWhitespaceNoNewLineBlock, closedBracket)
+	functionParametersSingle      = Sequence(openBracket, optionalWhitespaceBlock, parameter, optionalWhitespaceBlock, closedBracket)
+	functionParametersEmpty       = Sequence(openBracket, optionalWhitespaceBlock, closedBracket)
+	functionParameters            = Set(functionParametersBoundedList, functionParametersSingle, functionParametersEmpty)
+
+	//Function Return Parameters
 	returnParametersNamed       = functionParameters
 	returnParametersSingle      = returnType
 	returnParametersList        = Sequence(Range(Sequence(returnType, optionalWhitespaceNoNewLineBlock, comma, optionalWhitespaceBlock), 1, -1), optionalWhitespaceBlock, returnType)
 	returnParametersBoundedList = Sequence(openBracket, optionalWhitespaceBlock, returnParametersList, optionalWhitespaceNoNewLineBlock, closedBracket)
 	returnParameters            = Set(returnParametersSingle, returnParametersBoundedList, returnParametersNamed)
 	optionalReturnParameters    = Range(returnParameters, 0, 1)
-	functionSignature           = Sequence(Func, whitespaceNoNewLineBlock, functionName, optionalWhitespaceNoNewLineBlock, functionParameters, optionalWhitespaceNoNewLineBlock, optionalReturnParameters)
+
+	//Function Signature
+	functionSignature = Sequence(Func, whitespaceNoNewLineBlock, functionName, optionalWhitespaceNoNewLineBlock, functionParameters, optionalWhitespaceNoNewLineBlock, optionalReturnParameters)
 
 	//Var Assign Statement
 	Var                   = SequenceOfCharacters("var")
@@ -118,38 +126,4 @@ func functionCall(iter *Iterator) MatchTree {
 	return Sequence(optionalPackageName, functionName, optionalWhitespaceNoNewLineBlock, functionCallParametersBoundedAll)(iter)
 }
 
-//Todo: this.
-//Todo: padding = delimiter and whitespace
-func RepeatingList(listItem Expression, padding Expression) Expression {
-	return Sequence(Range(Sequence(listItem, padding), 1, -1), listItem)
-}
 
-func MultiLineRepeatingList(listItem Expression, delimiter Expression) Expression {
-	return Sequence(Range(Sequence(listItem, optionalWhitespaceNoNewLineBlock, delimiter, optionalWhitespaceBlock), 1, -1), optionalWhitespaceBlock, listItem)
-}
-
-func MultiLineRepeatingListNoDelimiter(listItem Expression) Expression {
-	return Sequence(Range(Sequence(listItem, whitespaceAtLeastOneNewLineBlock), 1, -1), listItem)
-}
-
-func BoundedMultiLineRepeatingListNoDelimiter(start Expression, listItem Expression, end Expression) Expression {
-	return Sequence(start, optionalWhitespaceBlock, MultiLineRepeatingListNoDelimiter(listItem), optionalWhitespaceBlock, end)
-}
-
-func MultiLineCodeBlockNoDelimiter(start Expression, listItem Expression, end Expression) Expression {
-	list := BoundedMultiLineRepeatingListNoDelimiter(start, listItem, end)
-	single := Sequence(start, optionalWhitespaceBlock, listItem, optionalWhitespaceBlock, end)
-	empty := Sequence(start, optionalWhitespaceBlock, end)
-	return Set(list, single, empty)
-}
-
-func FunctionParameterList(start Expression, listItem Expression, delimiter Expression, end Expression) Expression {
-	return Sequence(start, optionalWhitespaceBlock, MultiLineRepeatingList(listItem, delimiter), optionalWhitespaceNoNewLineBlock, end)
-}
-
-func FunctionParameterCodeBlock(start Expression, listItem Expression, delimiter Expression, end Expression) Expression {
-	list := FunctionParameterList(start, listItem, delimiter, end)
-	single := Sequence(start, optionalWhitespaceBlock, listItem, optionalWhitespaceBlock, end)
-	empty := Sequence(start, optionalWhitespaceBlock, end)
-	return Set(list, single, empty)
-}
