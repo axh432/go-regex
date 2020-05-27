@@ -85,11 +85,11 @@ func GetStringOfLetters(from rune, to rune) (string, error) {
 }
 
 func bothDigits(from rune, to rune) bool {
-	return unicode.IsDigit(from) || unicode.IsDigit(to)
+	return unicode.IsDigit(from) && unicode.IsDigit(to)
 }
 
 func bothLetters(from rune, to rune) bool {
-	return unicode.IsLetter(from) || unicode.IsLetter(to)
+	return unicode.IsLetter(from) && unicode.IsLetter(to)
 }
 
 func bothLower(from rune, to rune) bool {
