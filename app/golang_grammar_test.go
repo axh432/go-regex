@@ -75,8 +75,7 @@ func Test_parse_go(t *testing.T) {
 		require.True(t, Match("{\n\n\t}", functionBody).IsValid)
 		require.True(t, Match("{\n\n\tvar a = \"initial\"\n\t}", functionBody).IsValid)
 
-		fmt.Println(Match("{\n\n\tvar a = \"initial\"\n\t fmt.Println(a)\t\n}", functionBody).ToMermaidDiagram())
-		require.True(t, Match("{\n\n\tvar a = \"initial\"\n\tfmt.Println(a)\n\n\tvar b, c int = 1, 2\n\tfmt.Println(b, c)\n\n\tvar d = true\n\tfmt.Println(d)\n\n\tvar e int\n\tfmt.Println(e)\n\n\tf := \"apple\"\n\tfmt.Println(f)\n}", functionBody).IsValid)
+		require.True(t, Match("{\n\n\tvar a = \"initial\"\n\tfmt.Println(a)\n\n\tvar b, c int = 1, 2\n\tfmt.Println(b, c)\n\n\tvar d = true\n\tfmt.Println(d)}", functionBody).IsValid)
 	})
 
 	t.Run("function", func(t *testing.T){

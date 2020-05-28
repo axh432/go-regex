@@ -93,13 +93,11 @@ var (
 	assignStatement    = Sequence(varNames, optionalWhitespaceNoNewLineBlock, assignmentOperator, optionalWhitespaceBlock, valuePossibilities)
 
 	//Function Body
-	statement                = Set(varStatement, assignStatement, functionCall)
-	statementMultiple        = Label(Sequence(statement, Range(Sequence(whitespaceAtLeastOneNewLineBlock, statement), 1, -1)), "StatementMultiple")
-	statementBoundedMultiple = Sequence(openCurlyBrace, optionalWhitespaceBlock, statementMultiple, optionalWhitespaceBlock, closedCurlyBrace)
-	statementBoundedSingle   = Sequence(openCurlyBrace, optionalWhitespaceBlock, statement, optionalWhitespaceBlock, closedCurlyBrace)
-	statementBoundedEmpty    = Sequence(openCurlyBrace, optionalWhitespaceBlock, closedCurlyBrace)
-	statementBoundedAll      = Set(statementBoundedMultiple, statementBoundedSingle, statementBoundedEmpty)
-	functionBody             = statementBoundedAll
+	statement              = Set(varStatement, assignStatement, functionCall)
+	statements             = Label(Sequence(statement, Range(Sequence(whitespaceAtLeastOneNewLineBlock, statement), 0, -1)), "Statements")
+	statementsBounded      = Sequence(openCurlyBrace, optionalWhitespaceBlock, statements, optionalWhitespaceBlock, closedCurlyBrace)
+	statementsBoundedEmpty = Sequence(openCurlyBrace, optionalWhitespaceBlock, closedCurlyBrace)
+	functionBody           = Set(statementsBounded, statementsBoundedEmpty)
 
 	//Function
 	functionDeclaration = Sequence(functionSignature, optionalWhitespaceNoNewLineBlock, functionBody)
@@ -125,5 +123,3 @@ func functionCall(iter *Iterator) MatchTree {
 
 	return Sequence(optionalPackageName, functionName, optionalWhitespaceNoNewLineBlock, functionCallParametersBoundedAll)(iter)
 }
-
-
