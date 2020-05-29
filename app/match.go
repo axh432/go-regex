@@ -1,4 +1,4 @@
-package go_regex
+package gogex
 
 func Match(stringToMatch string, exp Expression) MatchTree {
 	iter := CreateIterator(stringToMatch)

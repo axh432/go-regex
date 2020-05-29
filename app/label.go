@@ -1,4 +1,4 @@
-package go_regex
+package gogex
 
 func Label(exp Expression, label string) Expression {
 	return func(iter *Iterator) MatchTree {

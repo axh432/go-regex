@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/go-regex.iml" filepath="$PROJECT_DIR$/go-regex.iml" />
+      <module fileurl="file://$PROJECT_DIR$/gogex.iml" filepath="$PROJECT_DIR$/gogex.iml" />
     </modules>
   </component>
 </project>

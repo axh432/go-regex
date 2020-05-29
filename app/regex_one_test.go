@@ -1,4 +1,4 @@
-package go_regex
+package gogex
 
 import (
 	"github.com/stretchr/testify/require"

@@ -1,4 +1,4 @@
-package go_regex
+package gogex
 
 func StringStart(iter *Iterator) MatchTree {
 	if iter.index == 0 {

@@ -1,4 +1,4 @@
-package go_regex
+package gogex
 
 type Iterator struct {
 	index int

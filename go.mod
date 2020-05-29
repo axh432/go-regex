@@ -1,4 +1,4 @@
-module github.com/axh432/go_regex
+module github.com/axh432/gogex
 
 go 1.14
 

@@ -1,3 +1,3 @@
-package go_regex
+package gogex
 
 type Expression func(iter *Iterator) MatchTree
