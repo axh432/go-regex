@@ -36,9 +36,9 @@ func TestRegexOne(t *testing.T) {
 		result2 := Match(`define "123"`, exp)
 		result3 := Match(`var g = 123;`, exp)
 
-		result1.acceptVisitor(visitor)
-		result2.acceptVisitor(visitor)
-		result3.acceptVisitor(visitor)
+		result1.AcceptVisitor(visitor)
+		result2.AcceptVisitor(visitor)
+		result3.AcceptVisitor(visitor)
 
 		require.Equal(t, []string{"123", "123", "123"}, numbers)
 	})
@@ -176,8 +176,8 @@ func TestRegexOne(t *testing.T) {
 		require.True(t, result2.IsValid)
 		require.False(t, result3.IsValid)
 
-		result1.acceptVisitor(visitor)
-		result2.acceptVisitor(visitor)
+		result1.AcceptVisitor(visitor)
+		result2.AcceptVisitor(visitor)
 		require.Equal(t, []string{"file_record_transcript", "file_07241999"}, filenames)
 	})
 
@@ -206,9 +206,9 @@ func TestRegexOne(t *testing.T) {
 		result2 := Match("May 1969", date)
 		result3 := Match("Aug 2011", date)
 
-		result1.acceptVisitor(visitor)
-		result2.acceptVisitor(visitor)
-		result3.acceptVisitor(visitor)
+		result1.AcceptVisitor(visitor)
+		result2.AcceptVisitor(visitor)
+		result3.AcceptVisitor(visitor)
 
 		require.True(t, result1.IsValid)
 		require.True(t, result2.IsValid)
@@ -235,9 +235,9 @@ func TestRegexOne(t *testing.T) {
 		result2 := Match("1920x1600", size)
 		result3 := Match("1024x768", size)
 
-		result1.acceptVisitor(visitor)
-		result2.acceptVisitor(visitor)
-		result3.acceptVisitor(visitor)
+		result1.AcceptVisitor(visitor)
+		result2.AcceptVisitor(visitor)
+		result3.AcceptVisitor(visitor)
 
 		require.True(t, result1.IsValid)
 		require.True(t, result2.IsValid)
