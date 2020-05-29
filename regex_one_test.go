@@ -158,7 +158,7 @@ func TestRegexOne(t *testing.T) {
 		filename := Label(Range(Set(Letter, Number, SetOfCharacters("_")), 1, -1), "filename")
 		fileExtension := SequenceOfCharacters(".pdf")
 		nonSpace := Set(Letter, Number, Punctuation, Symbol) //you can build not expressions
-		noCharactersAfter := Range(nonSpace, 0, 0) //custom string end expression
+		noCharactersAfter := Range(nonSpace, 0, 0)           //custom string end expression
 		exp := Sequence(filename, fileExtension, noCharactersAfter)
 
 		filenames := []string{}

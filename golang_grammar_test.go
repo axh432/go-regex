@@ -82,7 +82,7 @@ func Test_parse_go(t *testing.T) {
 
 		tree := Match("func special() {\n\tvar a = \"initial\"\n}", functionDeclaration)
 
-		fmt.Println(tree.ToMermaidDiagram())
+		fmt.Println(tree.ToGraphVizDiagram())
 
 		require.True(t, Match("func special() {\n\tvar a = \"initial\"\n}", functionDeclaration).IsValid)
 	})
