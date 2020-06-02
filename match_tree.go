@@ -30,6 +30,39 @@ func (mt *MatchTree) AcceptVisitor(visit MatchTreeVisitor) {
 	}
 }
 
+func (mt *MatchTree) PruneToLabels() MatchTree {
+	clone := cloneWithNoChildren(mt)
+	for _, child := range mt.Children {
+		pruneToLabelsRecursive(&child, &clone)
+	}
+	return clone
+}
+
+func pruneToLabelsRecursive(child *MatchTree, cloneParent *MatchTree) {
+	if child.Type == "Label" {
+		childClone := cloneWithNoChildren(child)
+		cloneParent.Children = append(cloneParent.Children, childClone)
+		for _, grandchild := range child.Children {
+			pruneToLabelsRecursive(&grandchild, &childClone)
+		}
+	} else {
+		for _, grandchild := range child.Children {
+			pruneToLabelsRecursive(&grandchild, cloneParent)
+		}
+	}
+}
+
+func cloneWithNoChildren(mt *MatchTree) MatchTree {
+	return MatchTree{
+		IsValid:   mt.IsValid,
+		Value:     mt.Value,
+		Type:      mt.Type,
+		Label:     mt.Label,
+		Children:  []MatchTree{},
+		DebugLine: mt.DebugLine,
+	}
+}
+
 func validMatchTree(value string, Type string, children []MatchTree) MatchTree {
 	return MatchTree{
 		IsValid:   true,
