@@ -40,10 +40,10 @@ func (mt *MatchTree) PruneToLabels() MatchTree {
 
 func pruneToLabelsRecursive(child *MatchTree, cloneParent *MatchTree) {
 	if child.Type == "Label" {
-		childClone := cloneWithNoChildren(child)
-		cloneParent.Children = append(cloneParent.Children, childClone)
+		cloneParent.Children = append(cloneParent.Children, cloneWithNoChildren(child))
+		cloneChild := &cloneParent.Children[len(cloneParent.Children)-1]
 		for _, grandchild := range child.Children {
-			pruneToLabelsRecursive(&grandchild, &childClone)
+			pruneToLabelsRecursive(&grandchild, cloneChild)
 		}
 	} else {
 		for _, grandchild := range child.Children {
