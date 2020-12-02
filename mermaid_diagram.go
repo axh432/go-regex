@@ -67,11 +67,11 @@ class %s {
 	IsValid: %t
 	Value: %s
 	Type: %s
-	Label: %s
+	Labels: %s
 	DebugLine: %s
 }`
 
-	definitions.WriteString(fmt.Sprintf(classDef, name, mt.IsValid, strconv.Quote(replaceMermaidSensitiveCharacters(mt.Value)), mt.Type, mt.Label, replaceMermaidSensitiveCharacters(mt.DebugLine)))
+	definitions.WriteString(fmt.Sprintf(classDef, name, mt.IsValid, strconv.Quote(replaceMermaidSensitiveCharacters(mt.Value)), mt.Type, formatLabels(mt.Labels), replaceMermaidSensitiveCharacters(mt.DebugLine)))
 
 	for _, child := range mt.Children {
 		toMermaidDiagramRecursive(&child, name, counter, links, definitions)

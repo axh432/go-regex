@@ -22,7 +22,6 @@ func TestSet(t *testing.T) {
 			IsValid:   true,
 			Value:     "a",
 			Type:      "Set",
-			Label:     "",
 			Children:  []MatchTree{{IsValid: true, Type: "SetOfCharacters", Value: "a"}},
 			DebugLine: "",
 		}
@@ -34,7 +33,6 @@ func TestSet(t *testing.T) {
 			IsValid:   true,
 			Value:     "b",
 			Type:      "Set",
-			Label:     "",
 			Children:  []MatchTree{{IsValid: true, Type: "SetOfCharacters", Value: "b"}},
 			DebugLine: "",
 		}
@@ -46,7 +44,6 @@ func TestSet(t *testing.T) {
 			IsValid:   true,
 			Value:     "c",
 			Type:      "Set",
-			Label:     "",
 			Children:  []MatchTree{{IsValid: true, Type: "SetOfCharacters", Value: "c"}},
 			DebugLine: "",
 		}
@@ -65,12 +62,13 @@ func TestSet(t *testing.T) {
 		matchResult := MatchIter(&iter, exp)
 
 		expected := MatchTree{
-			IsValid: false, Value: "",
-			Type: "Set", Label: "",
+			IsValid: false,
+			Value:   "",
+			Type:    "Set",
 			Children: []MatchTree{
-				{IsValid: false, Value: "", Type: "SetOfCharacters", Label: "", Children: []MatchTree(nil), DebugLine: "SetOfCharacters:[a], NoMatch: 'd' not found in set"},
-				{IsValid: false, Value: "", Type: "SetOfCharacters", Label: "", Children: []MatchTree(nil), DebugLine: "SetOfCharacters:[b], NoMatch: 'd' not found in set"},
-				{IsValid: false, Value: "", Type: "SetOfCharacters", Label: "", Children: []MatchTree(nil), DebugLine: "SetOfCharacters:[c], NoMatch: 'd' not found in set"}},
+				{IsValid: false, Value: "", Type: "SetOfCharacters", Children: []MatchTree(nil), DebugLine: "SetOfCharacters:[a], NoMatch: 'd' not found in set"},
+				{IsValid: false, Value: "", Type: "SetOfCharacters", Children: []MatchTree(nil), DebugLine: "SetOfCharacters:[b], NoMatch: 'd' not found in set"},
+				{IsValid: false, Value: "", Type: "SetOfCharacters", Children: []MatchTree(nil), DebugLine: "SetOfCharacters:[c], NoMatch: 'd' not found in set"}},
 			DebugLine: "Set:[], NoMatch:string does not match the given subexpressions"}
 
 		require.Equal(t, expected, matchResult)
@@ -90,7 +88,6 @@ func TestSet(t *testing.T) {
 			IsValid:   true,
 			Value:     "a",
 			Type:      "Set",
-			Label:     "",
 			Children:  []MatchTree{{IsValid: true, Type: "SetOfCharacters", Value: "a"}},
 			DebugLine: "",
 		}
@@ -111,11 +108,10 @@ func TestSet(t *testing.T) {
 			IsValid: false,
 			Value:   "",
 			Type:    "Set",
-			Label:   "",
 			Children: []MatchTree{
-				{IsValid: false, Value: "", Type: "SetOfCharacters", Label: "", Children: []MatchTree(nil), DebugLine: "SetOfCharacters:[a], NoMatch: 'x' not found in set"},
-				{IsValid: false, Value: "", Type: "SetOfCharacters", Label: "", Children: []MatchTree(nil), DebugLine: "SetOfCharacters:[b], NoMatch: 'x' not found in set"},
-				{IsValid: false, Value: "", Type: "SetOfCharacters", Label: "", Children: []MatchTree(nil), DebugLine: "SetOfCharacters:[c], NoMatch: 'x' not found in set"},
+				{IsValid: false, Value: "", Type: "SetOfCharacters", Children: []MatchTree(nil), DebugLine: "SetOfCharacters:[a], NoMatch: 'x' not found in set"},
+				{IsValid: false, Value: "", Type: "SetOfCharacters", Children: []MatchTree(nil), DebugLine: "SetOfCharacters:[b], NoMatch: 'x' not found in set"},
+				{IsValid: false, Value: "", Type: "SetOfCharacters", Children: []MatchTree(nil), DebugLine: "SetOfCharacters:[c], NoMatch: 'x' not found in set"},
 			},
 			DebugLine: "Set:[], NoMatch:string does not match the given subexpressions",
 		}
@@ -139,11 +135,10 @@ func TestSet(t *testing.T) {
 			IsValid: false,
 			Value:   "",
 			Type:    "Set",
-			Label:   "",
 			Children: []MatchTree{
-				{IsValid: false, Value: "", Type: "SetOfCharacters", Label: "", Children: []MatchTree(nil), DebugLine: "SetOfCharacters:[a], NoMatch:reached end of string before finished"},
-				{IsValid: false, Value: "", Type: "SetOfCharacters", Label: "", Children: []MatchTree(nil), DebugLine: "SetOfCharacters:[b], NoMatch:reached end of string before finished"},
-				{IsValid: false, Value: "", Type: "SetOfCharacters", Label: "", Children: []MatchTree(nil), DebugLine: "SetOfCharacters:[c], NoMatch:reached end of string before finished"},
+				{IsValid: false, Value: "", Type: "SetOfCharacters", Children: []MatchTree(nil), DebugLine: "SetOfCharacters:[a], NoMatch:reached end of string before finished"},
+				{IsValid: false, Value: "", Type: "SetOfCharacters", Children: []MatchTree(nil), DebugLine: "SetOfCharacters:[b], NoMatch:reached end of string before finished"},
+				{IsValid: false, Value: "", Type: "SetOfCharacters", Children: []MatchTree(nil), DebugLine: "SetOfCharacters:[c], NoMatch:reached end of string before finished"},
 			},
 			DebugLine: "Set:[], NoMatch:string does not match the given subexpressions"}
 
@@ -160,7 +155,6 @@ func TestSet(t *testing.T) {
 			IsValid:   false,
 			Value:     "",
 			Type:      "Set",
-			Label:     "",
 			Children:  nil,
 			DebugLine: "Set:[], NoMatch:number of subexpressions is zero",
 		}
@@ -181,7 +175,6 @@ func TestSet(t *testing.T) {
 			IsValid: true,
 			Value:   "there",
 			Type:    "Set",
-			Label:   "",
 			Children: []MatchTree{
 				{IsValid: true, Type: "SequenceOfCharacters", Value: "there"},
 			},

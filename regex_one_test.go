@@ -27,7 +27,7 @@ func TestRegexOne(t *testing.T) {
 
 		numbers := []string{}
 		visitor := func(mt *MatchTree) {
-			if mt.Label != "" {
+			if len(mt.Labels) > 0 {
 				numbers = append(numbers, mt.Value)
 			}
 		}
@@ -81,7 +81,6 @@ func TestRegexOne(t *testing.T) {
 		require.False(t, Match("pan", exp).IsValid)
 	})
 
-	//Todo: in regex our 'Ranges' are called 'Repetitions' maybe we should rename them?
 	t.Run("Lesson 5: Character ranges", func(t *testing.T) {
 		A_C, _ := GetSetOfLetters('A', 'C')
 		n_p, _ := GetSetOfLetters('n', 'p')
@@ -107,6 +106,7 @@ func TestRegexOne(t *testing.T) {
 		require.True(t, Match("wazzzzzup", exp).IsValid)
 		require.True(t, Match("wazzzup", exp).IsValid)
 		require.False(t, Match("wazup", exp).IsValid)
+		require.False(t, Match("wazzzzzzup", exp).IsValid)
 	})
 
 	t.Run("Lesson 7: Matching Repeated Characters", func(t *testing.T) {
@@ -144,7 +144,6 @@ func TestRegexOne(t *testing.T) {
 		require.False(t, Match("abc", exp).IsValid)
 	})
 
-	//Todo: do we need the start or end of string markers?
 	t.Run("Lesson 10: Starting and ending", func(t *testing.T) {
 		exp := SequenceOfCharacters("Mission: successful")
 
@@ -163,7 +162,7 @@ func TestRegexOne(t *testing.T) {
 
 		filenames := []string{}
 		visitor := func(mt *MatchTree) {
-			if mt.Label == "filename" {
+			if len(mt.Labels) > 0 && mt.Labels[0] == "filename" {
 				filenames = append(filenames, mt.Value)
 			}
 		}
@@ -194,10 +193,10 @@ func TestRegexOne(t *testing.T) {
 		dates := []string{}
 		years := []string{}
 		visitor := func(mt *MatchTree) {
-			if mt.Label == "date" {
+			if len(mt.Labels) > 0 && mt.Labels[0] == "date" {
 				dates = append(dates, mt.Value)
 			}
-			if mt.Label == "year" {
+			if len(mt.Labels) > 0 && mt.Labels[0] == "year" {
 				years = append(years, mt.Value)
 			}
 		}
@@ -226,7 +225,7 @@ func TestRegexOne(t *testing.T) {
 
 		dimensions := []string{}
 		visitor := func(mt *MatchTree) {
-			if mt.Label == "dimension" {
+			if len(mt.Labels) > 0 && mt.Labels[0] == "dimension" {
 				dimensions = append(dimensions, mt.Value)
 			}
 		}

@@ -14,8 +14,7 @@ func TestSequenceOfCharacters(t *testing.T) {
 		expected := MatchTree{
 			IsValid:   true,
 			Value:     "1234567890qwertyuiop[]asdfghjkl;'\\zxcvbnm`,./!@£$%^&*()_+{}|:?><~",
-			Type:	   "SequenceOfCharacters",
-			Label:     "",
+			Type:      "SequenceOfCharacters",
 			Children:  nil,
 			DebugLine: "",
 		}
@@ -31,8 +30,7 @@ func TestSequenceOfCharacters(t *testing.T) {
 		expected := MatchTree{
 			IsValid:   false,
 			Value:     "",
-			Type:	   "SequenceOfCharacters",
-			Label:     "",
+			Type:      "SequenceOfCharacters",
 			Children:  nil,
 			DebugLine: "SequenceOfCharacters:[b], NoMatch: 'a' does not match the sequence",
 		}
@@ -48,8 +46,7 @@ func TestSequenceOfCharacters(t *testing.T) {
 		expected := MatchTree{
 			IsValid:   false,
 			Value:     "a",
-			Type:	   "SequenceOfCharacters",
-			Label:     "",
+			Type:      "SequenceOfCharacters",
 			Children:  nil,
 			DebugLine: "SequenceOfCharacters:[ac], NoMatch: 'ab' does not match the sequence",
 		}
@@ -65,8 +62,7 @@ func TestSequenceOfCharacters(t *testing.T) {
 		expected := MatchTree{
 			IsValid:   false,
 			Value:     "a",
-			Type:	   "SequenceOfCharacters",
-			Label:     "",
+			Type:      "SequenceOfCharacters",
 			Children:  nil,
 			DebugLine: "SequenceOfCharacters:[adc], NoMatch: 'ab' does not match the sequence",
 		}
@@ -82,8 +78,7 @@ func TestSequenceOfCharacters(t *testing.T) {
 		expected := MatchTree{
 			IsValid:   true,
 			Value:     "abc",
-			Type:	   "SequenceOfCharacters",
-			Label:     "",
+			Type:      "SequenceOfCharacters",
 			Children:  nil,
 			DebugLine: "",
 		}
@@ -99,8 +94,7 @@ func TestSequenceOfCharacters(t *testing.T) {
 		expected := MatchTree{
 			IsValid:   false,
 			Value:     "ab",
-			Type:	   "SequenceOfCharacters",
-			Label:     "",
+			Type:      "SequenceOfCharacters",
 			Children:  nil,
 			DebugLine: "SequenceOfCharacters:[abc], NoMatch:reached end of string before finished",
 		}
@@ -116,8 +110,7 @@ func TestSequenceOfCharacters(t *testing.T) {
 		expected := MatchTree{
 			IsValid:   false,
 			Value:     "",
-			Type:	   "SequenceOfCharacters",
-			Label:     "",
+			Type:      "SequenceOfCharacters",
 			Children:  nil,
 			DebugLine: "SequenceOfCharacters:[abc], NoMatch:reached end of string before finished",
 		}
@@ -134,8 +127,7 @@ func TestSequenceOfCharacters(t *testing.T) {
 		expected := MatchTree{
 			IsValid:   false,
 			Value:     "",
-			Type:	   "SequenceOfCharacters",
-			Label:     "",
+			Type:      "SequenceOfCharacters",
 			Children:  nil,
 			DebugLine: "SequenceOfCharacters:[], NoMatch:sequence of characters is empty",
 		}

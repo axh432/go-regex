@@ -94,11 +94,10 @@ func TestRange(t *testing.T) {
 		exp := Range(subExp, 1, -1)
 
 		expected := MatchTree{
-			IsValid: false,
-			Value: "",
-			Type: "Range",
-			Label: "",
-			Children: []MatchTree(nil),
+			IsValid:   false,
+			Value:     "",
+			Type:      "Range",
+			Children:  []MatchTree(nil),
 			DebugLine: "Range:[1:-1], InfiniteLoop:subexpression can capture values of 0 length which will cause Range to loop indefinitely",
 		}
 
@@ -119,7 +118,6 @@ func exactlyOne(t *testing.T, subExp Expression, Type string) {
 		IsValid:   true,
 		Value:     "a",
 		Type:      "Range",
-		Label:     "",
 		Children:  []MatchTree{{IsValid: true, Type: Type, Value: "a"}},
 		DebugLine: "",
 	}
@@ -136,7 +134,6 @@ func exactlyTwo(t *testing.T, subExp Expression, Type string) {
 		IsValid:   true,
 		Value:     "aa",
 		Type:      "Range",
-		Label:     "",
 		Children:  []MatchTree{{IsValid: true, Type: Type, Value: "a"}, {IsValid: true, Type: Type, Value: "a"}},
 		DebugLine: "",
 	}
@@ -153,7 +150,6 @@ func withinRange(t *testing.T, subExp Expression, Type string) {
 		IsValid:   true,
 		Value:     "aaa",
 		Type:      "Range",
-		Label:     "",
 		Children:  []MatchTree{{IsValid: true, Type: Type, Value: "a"}, {IsValid: true, Type: Type, Value: "a"}, {IsValid: true, Type: Type, Value: "a"}},
 		DebugLine: "",
 	}
@@ -171,7 +167,6 @@ func greaterThanRange(t *testing.T, subExp Expression, Type string) {
 		IsValid:   false,
 		Value:     "",
 		Type:      "Range",
-		Label:     "",
 		Children:  []MatchTree{{IsValid: true, Type: Type, Value: "a"}, {IsValid: true, Type: Type, Value: "a"}},
 		DebugLine: "Range:[1:1], NoMatch:number of subexpressions greater than max",
 	}
@@ -189,7 +184,6 @@ func lessThanRange(t *testing.T, subExp Expression, Type string) {
 		IsValid:   false,
 		Value:     "",
 		Type:      "Range",
-		Label:     "",
 		Children:  []MatchTree{{IsValid: true, Type: Type, Value: "a"}},
 		DebugLine: "Range:[2:3], NoMatch:number of subexpressions less than min",
 	}
@@ -207,7 +201,6 @@ func emptyStringMinOfOne(t *testing.T, subExp Expression, Type string) {
 		IsValid:   false,
 		Value:     "",
 		Type:      "Range",
-		Label:     "",
 		Children:  []MatchTree{},
 		DebugLine: "Range:[1:2], NoMatch:number of subexpressions less than min",
 	}
@@ -225,7 +218,6 @@ func zeroMinimum(t *testing.T, subExp Expression, Type string) {
 		IsValid:   true,
 		Value:     "",
 		Type:      "Range",
-		Label:     "",
 		Children:  []MatchTree{},
 		DebugLine: "",
 	}
@@ -242,7 +234,6 @@ func maxIsInfinity(t *testing.T, subExp Expression, Type string) {
 		IsValid:   true,
 		Value:     "aaaaa",
 		Type:      "Range",
-		Label:     "",
 		Children:  []MatchTree{{IsValid: true, Type: Type, Value: "a"}, {IsValid: true, Type: Type, Value: "a"}, {IsValid: true, Type: Type, Value: "a"}, {IsValid: true, Type: Type, Value: "a"}, {IsValid: true, Type: Type, Value: "a"}},
 		DebugLine: "",
 	}

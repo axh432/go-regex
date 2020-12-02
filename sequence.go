@@ -21,11 +21,11 @@ func Sequence(expressions ...Expression) Expression {
 			matches = append(matches, match)
 			if match.IsValid {
 				sb.WriteString(match.Value)
-			}else{
+			} else {
 				iter.Reset(startingIndex)
 				debugLine := "Sequence:[], NoMatch:string does not match given subexpression"
-				if match.Label != "" {
-					 debugLine = fmt.Sprintf("Sequence:[], NoMatch:string does not match given subexpression: %s", match.Label)
+				if len(match.Labels) > 0 {
+					debugLine = fmt.Sprintf("Sequence:[], NoMatch:string does not match given subexpression: %s", formatLabels(match.Labels))
 				}
 				return invalidMatchTree(sb.String(), "Sequence", matches, debugLine)
 			}

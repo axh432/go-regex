@@ -4,7 +4,7 @@ type MatchTree struct {
 	IsValid   bool
 	Value     string
 	Type      string
-	Label     string
+	Labels    []string
 	Children  []MatchTree
 	DebugLine string
 }
@@ -57,7 +57,7 @@ func cloneWithNoChildren(mt *MatchTree) MatchTree {
 		IsValid:   mt.IsValid,
 		Value:     mt.Value,
 		Type:      mt.Type,
-		Label:     mt.Label,
+		Labels:    mt.Labels,
 		Children:  []MatchTree{},
 		DebugLine: mt.DebugLine,
 	}
@@ -68,7 +68,6 @@ func validMatchTree(value string, Type string, children []MatchTree) MatchTree {
 		IsValid:   true,
 		Value:     value,
 		Type:      Type,
-		Label:     "",
 		Children:  children,
 		DebugLine: "",
 	}
@@ -79,7 +78,6 @@ func invalidMatchTree(value, Type string, children []MatchTree, debugLine string
 		IsValid:   false,
 		Value:     value,
 		Type:      Type,
-		Label:     "",
 		Children:  children,
 		DebugLine: debugLine,
 	}

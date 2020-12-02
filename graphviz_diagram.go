@@ -45,7 +45,7 @@ func toGraphVizDiagramRecursive(mt *MatchTree, parentName string, counter *TypeC
 		name = fmt.Sprintf("%s_%d", mt.Type, counter.sequenceCount)
 		counter.sequenceCount++
 		break
-	case "Label":
+	case "Labels":
 		name = fmt.Sprintf("%s_%d", mt.Type, counter.labelCount)
 		counter.labelCount++
 		break
@@ -70,13 +70,26 @@ func toGraphVizDiagramRecursive(mt *MatchTree, parentName string, counter *TypeC
      <tr><td align="left">IsValid: %t</td></tr>
      <tr><td align="left">Value: %s</td></tr>
      <tr><td align="left">Type: %s</td></tr>
-     <tr><td align="left">Label: %s</td></tr>
+     <tr><td align="left">Labels: %s</td></tr>
      <tr><td align="left">DebugLine: %s</td></tr>
    </table>>];`
 
-	definitions.WriteString(fmt.Sprintf(classDef, name, name, mt.IsValid, strconv.Quote(mt.Value), mt.Type, mt.Label, mt.DebugLine))
+	definitions.WriteString(fmt.Sprintf(classDef, name, name, mt.IsValid, strconv.Quote(mt.Value), mt.Type, formatLabels(mt.Labels), mt.DebugLine))
 
 	for _, child := range mt.Children {
 		toGraphVizDiagramRecursive(&child, name, counter, links, definitions)
 	}
+}
+
+func formatLabels(mtLabels []string) string {
+	labels := strings.Builder{}
+	labels.WriteString("[")
+	for i, label := range mtLabels {
+		labels.WriteString(strconv.Quote(label))
+		if i != len(mtLabels)-1 {
+			labels.WriteString(", ")
+		}
+	}
+	labels.WriteString("]")
+	return labels.String()
 }
