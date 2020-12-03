@@ -1,6 +1,7 @@
 package gogex
 
 import (
+	"fmt"
 	"github.com/stretchr/testify/require"
 	"testing"
 )
@@ -259,7 +260,7 @@ func TestRegexOne(t *testing.T) {
 
 	t.Run("Lesson 15: Other special characters", func(t *testing.T) {
 
-		word := Label(Range(Letter, 1, -1), "word")
+		word := Label(Range(Letter, 1, -1), "word", "something", "something else")
 		space := SetOfCharacters(" ")
 		integer := Label(Range(Number, 1, -1), "integer")
 		decimal := Sequence(integer, SetOfCharacters("."), integer)
@@ -271,6 +272,10 @@ func TestRegexOne(t *testing.T) {
 		require.True(t, Match("The quick brown fox jumps over the lazy dog.", sentence).IsValid)
 		require.True(t, Match("There were 614 instances of students getting 90.0% or above.", sentence).IsValid)
 		require.True(t, Match("The FCC had to censor the network for saying &$#*@!.", sentence).IsValid)
+
+		tree := Match("The quick brown fox jumps over the lazy dog.", sentence)
+		fmt.Println(tree.ToGraphVizDiagram())
+
 	})
 
 }

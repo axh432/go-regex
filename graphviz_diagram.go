@@ -45,7 +45,7 @@ func toGraphVizDiagramRecursive(mt *MatchTree, parentName string, counter *TypeC
 		name = fmt.Sprintf("%s_%d", mt.Type, counter.sequenceCount)
 		counter.sequenceCount++
 		break
-	case "Labels":
+	case "Label":
 		name = fmt.Sprintf("%s_%d", mt.Type, counter.labelCount)
 		counter.labelCount++
 		break
