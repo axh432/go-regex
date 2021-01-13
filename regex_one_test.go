@@ -1,7 +1,6 @@
 package gogex
 
 import (
-	"fmt"
 	"github.com/stretchr/testify/require"
 	"testing"
 )
@@ -272,9 +271,6 @@ func TestRegexOne(t *testing.T) {
 		require.True(t, Match("The quick brown fox jumps over the lazy dog.", sentence).IsValid)
 		require.True(t, Match("There were 614 instances of students getting 90.0% or above.", sentence).IsValid)
 		require.True(t, Match("The FCC had to censor the network for saying &$#*@!.", sentence).IsValid)
-
-		tree := Match("The quick brown fox jumps over the lazy dog.", sentence)
-		fmt.Println(tree.ToGraphVizDiagram())
 
 	})
 
