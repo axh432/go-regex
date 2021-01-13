@@ -68,12 +68,12 @@ func TestRange(t *testing.T) {
 
 	t.Run("zero minimum sequence", func(t *testing.T) {
 		sequence := SequenceOfCharacters("a")
-		zeroMinimum(t, sequence, "SequenceOfCharacters")
+		zeroMinimum(t, sequence)
 	})
 
 	t.Run("zero minimum set", func(t *testing.T) {
 		set := SetOfCharacters("a")
-		zeroMinimum(t, set, "SetOfCharacters")
+		zeroMinimum(t, set)
 	})
 
 	t.Run("max is infinity sequence", func(t *testing.T) {
@@ -86,19 +86,25 @@ func TestRange(t *testing.T) {
 		maxIsInfinity(t, set, "SetOfCharacters")
 	})
 
-	t.Run("infinite loop", func(t *testing.T) {
+	t.Run("subexpression can capture values of zero length", func(t *testing.T) {
 		subExp := Range(SetOfCharacters("a"), 0, -1)
-
 		iter := CreateIterator("xxxxx")
-
 		exp := Range(subExp, 1, -1)
 
 		expected := MatchTree{
-			IsValid:   false,
-			Value:     "",
-			Type:      "Range",
-			Children:  []MatchTree(nil),
-			DebugLine: "Range:[1:-1], InfiniteLoop:subexpression can capture values of 0 length which will cause Range to loop indefinitely",
+			IsValid: true,
+			Value:   "",
+			Type:    "Range",
+			Children: []MatchTree{
+				MatchTree{
+					IsValid:   true,
+					Value:     "",
+					Type:      "Range",
+					Children:  []MatchTree{},
+					DebugLine: "",
+				},
+			},
+			DebugLine: "",
 		}
 
 		matchResult := MatchIter(&iter, exp)
@@ -106,6 +112,65 @@ func TestRange(t *testing.T) {
 		require.Equal(t, expected, matchResult)
 		require.Equal(t, 0, iter.index)
 
+	})
+
+	//need to make sure that it returns at least the minimum number of match trees in this case
+	t.Run("subexpression can capture values of zero length with minimum set to three", func(t *testing.T) {
+		subExp := Range(SetOfCharacters("a"), 0, -1)
+		iter := CreateIterator("xxxxx")
+		exp := Range(subExp, 3, -1)
+
+		expected := MatchTree{
+			IsValid: true,
+			Value:   "",
+			Type:    "Range",
+			Children: []MatchTree{
+				MatchTree{
+					IsValid:   true,
+					Value:     "",
+					Type:      "Range",
+					Children:  []MatchTree{},
+					DebugLine: "",
+				},
+				MatchTree{
+					IsValid:   true,
+					Value:     "",
+					Type:      "Range",
+					Children:  []MatchTree{},
+					DebugLine: "",
+				},
+				MatchTree{
+					IsValid:   true,
+					Value:     "",
+					Type:      "Range",
+					Children:  []MatchTree{},
+					DebugLine: "",
+				},
+			},
+			DebugLine: "",
+		}
+
+		matchResult := MatchIter(&iter, exp)
+
+		require.Equal(t, expected, matchResult)
+		require.Equal(t, 0, iter.index)
+
+	})
+
+	t.Run("when the min is a negative number return invalid match with debugline", func(t *testing.T) {
+		exp := Range(SetOfCharacters("a"), -1, 1)
+		iter := CreateIterator("")
+
+		expected := MatchTree{
+			IsValid:   false,
+			Value:     "",
+			Type:      "Range",
+			Children:  []MatchTree{},
+			DebugLine: "Range:[-1:1], NoMatch:the min '-1' cannot be a negative number. Please check your gogex",
+		}
+
+		matchResult := MatchIter(&iter, exp)
+		require.Equal(t, expected, matchResult)
 	})
 }
 
@@ -208,7 +273,7 @@ func emptyStringMinOfOne(t *testing.T, subExp Expression, Type string) {
 	require.Equal(t, 0, iter.index)
 }
 
-func zeroMinimum(t *testing.T, subExp Expression, Type string) {
+func zeroMinimum(t *testing.T, subExp Expression) {
 	iter := CreateIterator("")
 
 	exp := Range(subExp, 0, 1)

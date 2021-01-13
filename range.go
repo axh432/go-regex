@@ -7,12 +7,13 @@ import (
 
 func Range(exp Expression, min int, max int) Expression {
 	return func(iter *Iterator) MatchTree {
-		startingIndex := iter.GetIndex()
-		matches := collectConsecutiveMatches(iter, exp)
 
-		if matches == nil {
-			return invalidMatchTree("", "Range", matches, fmt.Sprintf("Range:[%d:%d], InfiniteLoop:subexpression can capture values of 0 length which will cause Range to loop indefinitely", min, max))
+		if min < 0 {
+			return invalidMatchTree("", "Range", []MatchTree{}, fmt.Sprintf("Range:[%d:%d], NoMatch:the min '%d' cannot be a negative number. Please check your gogex", min, max, min))
 		}
+
+		startingIndex := iter.GetIndex()
+		matches := collectConsecutiveMatches(iter, exp, min)
 
 		count := len(matches)
 
@@ -38,16 +39,17 @@ func createValue(matches []MatchTree) string {
 	return sb.String()
 }
 
-func collectConsecutiveMatches(iter *Iterator, exp Expression) []MatchTree {
+func collectConsecutiveMatches(iter *Iterator, exp Expression, min int) []MatchTree {
 	matches := []MatchTree{}
 	for iter.HasNext() {
 		startingIndex := iter.index
 		match := exp(iter)
 		if match.IsValid {
-			if len(match.Value) == 0 {
-				return nil
+			//if length of the value is 0 then we would loop forever so gather the minimum and return.
+			if len(match.Value) == 0 && len(matches) == min {
+				return matches
 			}
-			matches = append(matches, match) //I think children need to be pointers
+			matches = append(matches, match)
 		} else {
 			iter.Reset(startingIndex)
 			break
